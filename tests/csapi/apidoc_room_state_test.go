@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/matrix-org/complement/runtime"
 	"github.com/tidwall/gjson"
 
 	"github.com/matrix-org/complement"
@@ -329,6 +330,8 @@ func TestRoomState(t *testing.T) {
 			})
 		})
 		t.Run("GET /rooms/:room_id/joined_members is forbidden after leaving room", func(t *testing.T) {
+			// Venator: does not implement API version r0
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := authedClient.MustCreateRoom(t, map[string]interface{}{})
 			authedClient.MustLeaveRoom(t, roomID)

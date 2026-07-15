@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/matrix-org/complement"
+	"github.com/matrix-org/complement/runtime"
 	"github.com/matrix-org/gomatrixserverlib"
 	"github.com/matrix-org/gomatrixserverlib/spec"
 	"github.com/tidwall/gjson"
@@ -40,6 +41,8 @@ func TestKnocking(t *testing.T) {
 }
 
 func doTestKnocking(t *testing.T, roomVersion string, joinRule string) {
+	// Venator: does not yet implement federation.
+	runtime.SkipIf(t, runtime.Venator)
 	deployment := complement.Deploy(t, 2)
 	defer deployment.Destroy(t)
 

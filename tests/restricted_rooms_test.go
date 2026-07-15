@@ -331,6 +331,8 @@ func TestRestrictedRoomsRemoteJoinFailOver(t *testing.T) {
 
 func doTestRestrictedRoomsRemoteJoinFailOver(t *testing.T, roomVersion string, joinRule string) {
 	runtime.SkipIf(t, runtime.Dendrite) // FIXME: https://github.com/matrix-org/dendrite/issues/2801
+	// Venator: does not yet implement federation.
+	runtime.SkipIf(t, runtime.Venator)
 
 	deployment := complement.Deploy(t, 3)
 	defer deployment.Destroy(t)
@@ -469,6 +471,8 @@ func TestRestrictedRoomsLocalJoinNoCreatorsUsesPowerLevelsV11(t *testing.T) {
 }
 
 func doTestRestrictedRoomsLocalJoinNoCreatorsUsesPowerLevels(t *testing.T, roomVersion string, joinRule string) {
+	// Venator: does not yet implement federation.
+	runtime.SkipIf(t, runtime.Venator)
 	deployment := complement.Deploy(t, 2)
 	defer deployment.Destroy(t)
 	// Create the room

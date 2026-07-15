@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/matrix-org/complement/runtime"
 	"github.com/tidwall/gjson"
 
 	"github.com/matrix-org/complement"
@@ -276,6 +277,8 @@ func TestRoomDeleteAlias(t *testing.T) {
 
 		// sytest: Can delete canonical alias
 		t.Run("Can delete canonical alias", func(t *testing.T) {
+			// Venator: https://github.com/matrix-org/complement/issues/900
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{})
@@ -383,6 +386,8 @@ func TestRoomDeleteAlias(t *testing.T) {
 
 		// sytest: Users can't delete other's aliases
 		t.Run("Users can't delete other's aliases", func(t *testing.T) {
+			// Venator: https://github.com/matrix-org/complement/issues/900
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{})
@@ -416,6 +421,9 @@ func TestRoomDeleteAlias(t *testing.T) {
 
 		// sytest: Users with sufficient power-level can delete other's aliases
 		t.Run("Users with sufficient power-level can delete other's aliases", func(t *testing.T) {
+			// Venator: https://github.com/matrix-org/complement/issues/900
+			// This technically passes, but not because of the behaviour this test is testing for.
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{})

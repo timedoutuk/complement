@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/matrix-org/complement/runtime"
 	"github.com/tidwall/gjson"
 
 	"github.com/matrix-org/complement"
@@ -39,6 +40,8 @@ func TestRoomForget(t *testing.T) {
 		})
 		// sytest: Forgotten room messages cannot be paginated
 		t.Run("Forgotten room messages cannot be paginated", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{"preset": "public_chat"})
 			bob.MustJoinRoom(t, roomID, []spec.ServerName{})
@@ -61,6 +64,8 @@ func TestRoomForget(t *testing.T) {
 		})
 		// sytest: Forgetting room does not show up in v2 /sync
 		t.Run("Forgetting room does not show up in v2 initial /sync", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{"preset": "public_chat"})
 			bob.MustJoinRoom(t, roomID, []spec.ServerName{})
@@ -102,6 +107,8 @@ func TestRoomForget(t *testing.T) {
 			}
 		})
 		t.Run("Leave for forgotten room shows up in v2 incremental /sync", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			// Note that this test runs counter to the wording of the spec. At the time of writing,
 			// the spec says that forgotten rooms should not show up in any /sync responses, but
 			// that would make it impossible for other devices to determine that a room has been
@@ -144,6 +151,8 @@ func TestRoomForget(t *testing.T) {
 		})
 		// sytest: Can forget room you've been kicked from
 		t.Run("Can forget room you've been kicked from", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{"preset": "public_chat"})
 			bob.MustJoinRoom(t, roomID, []spec.ServerName{})
@@ -176,6 +185,8 @@ func TestRoomForget(t *testing.T) {
 
 		// sytest: Can re-join room if re-invited
 		t.Run("Can re-join room if re-invited", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{"preset": "private_chat"})
 			// Invite Bob
@@ -248,6 +259,8 @@ func TestRoomForget(t *testing.T) {
 		})
 
 		t.Run("Can forget room we weren't an actual member", func(t *testing.T) {
+			// Venator: does not implement manual room forgetting (is always done automatically on leave)
+			runtime.SkipIf(t, runtime.Venator)
 			t.Parallel()
 			roomID := alice.MustCreateRoom(t, map[string]interface{}{"preset": "private_chat"})
 			alice.MustInviteRoom(t, roomID, bob.UserID)
