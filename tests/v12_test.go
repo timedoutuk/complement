@@ -53,6 +53,9 @@ func TestMSC4289PrivilegedRoomCreators(t *testing.T) {
 	}
 
 	t.Run("PL event is missing creator in users map", func(t *testing.T) {
+		// Venator: default values (including empty) for power levels are skipped during marshalling, so this test
+		// flakes as the empty users object is not present (which is legal)
+		runtime.SkipIf(t, runtime.Venator)
 		roomID := alice.MustCreateRoom(t, map[string]interface{}{
 			"room_version": roomVersion12,
 		})

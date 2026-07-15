@@ -77,6 +77,8 @@ func TestRestrictedRoomsRemoteJoinInMSC3787Room(t *testing.T) {
 
 // See TestRestrictedRoomsRemoteJoinLocalUser
 func TestRestrictedRoomsRemoteJoinLocalUserInMSC3787Room(t *testing.T) {
+	// Venator: does not yet implement federation
+	runtime.SkipIf(t, runtime.Venator)
 	doTestRestrictedRoomsRemoteJoinLocalUser(t, roomVersion, joinRule)
 }
 
